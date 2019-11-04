@@ -10,9 +10,11 @@ RUN addgroup --system snmpsim
 
 COPY snmpsim.diff /
 
-ADD data /home/snmpsim/data
+ADD data /usr/local/snmpsim/data
 
-RUN cd /home/snmpsim && \
+RUN mkdir -p /usr/local/snmpsim/cache && \
+    chown -R snmpsim:snmpsim /usr/local/snmpsim/cache && \
+    cd /home/snmpsim && \
     git clone https://github.com/etingof/snmpsim.git && \
     cd snmpsim && \
     patch -p1 < /snmpsim.diff && \
