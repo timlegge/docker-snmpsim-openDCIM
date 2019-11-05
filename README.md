@@ -35,6 +35,7 @@ To run a SNMP v3 version for testing with snmpwalk you can do the following:
                timlegge/docker-snmpsim-opendcim
 
 To test this you can use:
+
     snmpwalk **Docker HOST IP** -v3 -u testing -A authpass -a SHA \
             -X privpass -x AES -l authPriv -n cisco/catalyst-3750
 
