@@ -21,6 +21,23 @@ If you want to run snmpsimd with more flags then you can use `EXTRA_FLAGS`, like
                -e EXTRA_FLAGS="--v3-user=testing --v3-auth-key=testing123"
                timlegge/docker-snmpsim-opendcim
 
+### SNMP v3
+OpenDCIM is compatible with SNMPv3 however it is not compatible with snmpsimd's options for SNMP v3.  Specifically the context	
+
+To run a SNMP v3 version for testing with snmpwalk you can do the following:
+ 
+    docker run --rm --name docker-snmpsim-opendcim \
+               -v snmpsim_d/usr/local/snmpsim/data:z \
+               -v snmpsim_cache:/usr/local/snmpsim/cache:z \
+               -p 161:161/udp -e EXTRA_FLAGS="--v3-user=testing \
+               --v3-auth-key=authpass --v3-auth-proto=SHA \
+               --v3-priv-key=privpass --v3-priv-proto=AES" \
+               timlegge/docker-snmpsim-opendcim
+
+To test this you can use:
+    snmpwalk **Docker HOST IP** -v3 -u testing -A authpass -a SHA \
+            -X privpass -x AES -l authPriv -n cisco/catalyst-3750
+
 ## SNMP Devices Provided
 
 Type | Vendor | Model | Community | V3 Context Name
