@@ -25,10 +25,10 @@ If you want to run snmpsimd with more flags then you can use `EXTRA_FLAGS`, like
 
 ### Configure the device Template
 
-The [SNMP OID Information](#SNMP OID Information) gives the information necessary to add to your openDCIM template.  Be sure to choose the correct device type to display the correct OID fields.
+The [SNMP OID Information](##SNMP OID Information) gives the information necessary to add to your openDCIM template.  Be sure to choose the correct device type to display the correct OID fields.
 
 ### Configure the Device
-Create or modify a device using the SNMP access information from the [SNMP Devices Provided](#SNMP Devices Provided).  
+Create or modify a device using the SNMP access information from the [SNMP Devices Provided](##SNMP Devices Provided).  
 
 The Hostname/IP Address is the IP address of the host that is running the docker container.  If you are using openDCIM in a container you may wish to use a Docker network for the inter container communication. That is outside the scope of this document.
 
