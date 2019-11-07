@@ -115,7 +115,7 @@ AP7902B | OID for Phase1 | .1.3.6.1.4.1.318.1.1.12.2.3.1.1.2.1 | Phase 1 (or Ban
 AP7902B | OID for Phase2 | .1.3.6.1.4.1.318.1.1.12.2.3.1.1.2.2 | Phase 2 (or Bank 1) | 0.1 AMPS
 AP7902B | OID for Phase3 | .1.3.6.1.4.1.318.1.1.12.2.3.1.1.2.3 | Phase 3 (or Bank 2) | 0.1 AMPS
 
-### Triplite Power Transfer Switch
+### Tripplite Power Transfer Switch
 Type | Description | OID | Notes
 -----|--------|-------|--------------
 cdu | Firmware | .1.3.6.1.4.1.850.1.2.1.1.2.0 | 
@@ -124,3 +124,13 @@ cdu | Power Connections | .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.3.1 |
 cdu | Power Outlet Count | .1.3.6.1.4.1.850.1.1.3.4.1.2.1.4.1 | 
 cdu | Outlet State | .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.4.1 | On/Off State (1=off, 2=on)
 cdu | ATS Status OID | .1.3.6.1.4.1.850.1.1.3.4.3.1.1.1.12.1 | Source Availability (1=A, 2=B, 3=Both)
+
+#### Tripplite Responses
+The simulator uses the built in variation modules to provide changable values for some of the OIDs:
+
+   1. Power Outlet Names -> .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.2.1 are set to an initial value that can be changed by performing an snmpset command:
+
+    snmpset -v2c -c tripplite/pdumh20atnet [DOCKER HOST IP Address] \
+        .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.3.1.1 s "My new Port Description"
+
+   2. Outlet State -> .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.4.1 ar set using a numeric between 1 and 2 for half the records (essentially it flips)
