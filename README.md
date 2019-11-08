@@ -93,7 +93,15 @@ sensor | Internal Temperature | .1.3.6.1.4.1.21239.5.1.2.1.5.1 | 0.1
 sensor | Internal Humidity | .1.3.6.1.4.1.21239.5.1.2.1.6.1 | 1
 sensor | External Temperature 1 | .1.3.6.1.4.1.21239.5.1.4.1.5.2 | 0.1
 sensor | External Temperature 2 | .1.3.6.1.4.1.21239.5.1.4.1.5.3 | 0.1
+
+#### Geist Responses
+The simulator uses the built in variation modules to provide changable values for some of the OIDs:
+
+   1. OID values for temperature are set using a numeric between 100 and 300 (0.1 multiplier)
+   2. OID value for Humidity is set using a numeric between  25 and 50
  
+Both increment until the values wraps and then repeats
+
 ### APC Power Distribution Units
 The following settings are common for the following devices:
    1. AP7902B	
@@ -115,6 +123,16 @@ AP7902B | OID for Phase1 | .1.3.6.1.4.1.318.1.1.12.2.3.1.1.2.1 | Phase 1 (or Ban
 AP7902B | OID for Phase2 | .1.3.6.1.4.1.318.1.1.12.2.3.1.1.2.2 | Phase 2 (or Bank 1) | 0.1 AMPS
 AP7902B | OID for Phase3 | .1.3.6.1.4.1.318.1.1.12.2.3.1.1.2.3 | Phase 3 (or Bank 2) | 0.1 AMPS
 
+#### APC Responses
+The simulator uses the built in variation modules to provide changable values for some of the OIDs:
+
+   1. Power Outlet Names -> .1.3.6.1.4.1.318.1.1.4.4.2.1.4 are set to an initial value that can be changed by performing an snmpset command:
+
+    snmpset -v2c -c [community] [DOCKER HOST IP Address] \
+        .1.3.6.1.4.1.318.1.1.4.4.2.1.4.1 s "My new Port Description"
+
+   2. Outlet State -> .1.3.6.1.4.1.318.1.1.26.9.2.3.1.5 are set using a numeric between 1 and 2 for half the records (essentially it flips each time it is queried)
+
 ### Tripplite Power Transfer Switch
 Type | Description | OID | Notes
 -----|--------|-------|--------------
@@ -133,4 +151,4 @@ The simulator uses the built in variation modules to provide changable values fo
     snmpset -v2c -c tripplite/pdumh20atnet [DOCKER HOST IP Address] \
         .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.3.1.1 s "My new Port Description"
 
-   2. Outlet State -> .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.4.1 ar set using a numeric between 1 and 2 for half the records (essentially it flips)
+   2. Outlet State -> .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.4.1 are set using a numeric between 1 and 2 for half the records (essentially it flips each time it is queried)
