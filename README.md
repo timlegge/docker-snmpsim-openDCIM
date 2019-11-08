@@ -12,6 +12,8 @@ To use your own snmpwalks you should mount a folder with snmpwalks like this:
                -p 161:161/udp \
                timlegge/docker-snmpsim-opendcim
 
+In this case snmpsim_data is a volume created under /var/lib/docker/volumes
+
 The filename/directory determines the SNMP community name.
 
 If you want to run snmpsimd with more flags then you can use `EXTRA_FLAGS`, like this:
@@ -30,10 +32,10 @@ The [SNMP OID Information](#SNMP-OID-Information) gives the information necessar
 ### Configure the Device
 Create or modify a device using the SNMP access information from the [SNMP Devices Provided](#SNMP-Devices-Provided).  
 
-The Hostname/IP Address is the IP address of the host that is running the docker container.  If you are using openDCIM in a container you may wish to use a Docker network for the inter container communication. That is outside the scope of this document.
+The Hostname/IP Address is the IP address of the host that is running the docker container.  If you are using openDCIM in a container you may wish to use a Docker network for the inter-container communication. That is outside the scope of this document.
 
 ### SNMP v3
-OpenDCIM is compatible with SNMPv3 however it is not compatible with snmpsimd's options for SNMP v3.  Specifically the context	
+OpenDCIM is compatible with SNMPv3 however it is not compatible with snmpsimd's options for SNMP v3.  Specifically the context (Contexts allows a server to "proxy" snmp for many devices).
 
 To run a SNMP v3 version for testing with snmpwalk you can do the following:
  
@@ -63,7 +65,7 @@ Be sure to remove data from production systems.  Things to change include:
    4. Email Addresses
    5. Device Specific Descriptions (from port names, etc.)
 
-Basically read the file and think about whether you (or worse someone at your company) would want that information publically available.  Grepping the file for STRING is also useful.
+Basically read the file and think about whether you (or worse someone at your company) would want that information publically available.  Likely asking approval is a good thing as well.  Grepping the file for STRING is also useful to see what data to replace.
 
 ## SNMP Devices Provided
 
@@ -81,7 +83,7 @@ sensor | Geist | WatchDog 15P | geist/watchdog15p | geist/watchdog15p
 ## SNMP OID Information
 
 ### Geist Watchdog 15P
-The Watchdog 15P has an internal temperature and humidity sensors and have support for external temperature probes.
+The Watchdog 15P has an internal temperature and humidity sensor and has support for external temperature probes.
 
 openDCIM deals with the internal and each external sensor as seperate templates and as a separate device with the same IP address and SNMP info. 
 
@@ -131,6 +133,8 @@ The simulator uses the built in variation modules to provide changable values fo
     snmpset -v2c -c [community] [DOCKER HOST IP Address] \
         .1.3.6.1.4.1.318.1.1.4.4.2.1.4.1 s "My new Port Description"
 
+Note that the command for the snmpset needs to have the port number appended to the OID from the table above.
+
    2. Outlet State -> .1.3.6.1.4.1.318.1.1.26.9.2.3.1.5 are set using a numeric between 1 and 2 for half the records (essentially it flips each time it is queried)
 
 ### Tripplite Power Transfer Switch
@@ -151,4 +155,9 @@ The simulator uses the built in variation modules to provide changable values fo
     snmpset -v2c -c tripplite/pdumh20atnet [DOCKER HOST IP Address] \
         .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.3.1.1 s "My new Port Description"
 
+Note that the command for the snmpset needs to have the port number appended to the OID from the table above.
    2. Outlet State -> .1.3.6.1.4.1.850.1.1.3.4.3.3.1.1.4.1 are set using a numeric between 1 and 2 for half the records (essentially it flips each time it is queried)
+   3. ATS Status OID -> .1.3.6.1.4.1.850.1.1.3.4.3.1.1.1.12.1 is set to an intial value of 3 that can be changed by performing an snmpset command:
+
+    snmpset -v2c -c tripplite/pdumh20atnet [DOCKER HOST IP Address ] \
+        192.168.10.172 .1.3.6.1.4.1.850.1.1.3.4.3.1.1.1.12.1 i 3
