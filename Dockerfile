@@ -19,4 +19,4 @@ RUN mkdir -p /usr/local/snmpsim/cache && \
 
 EXPOSE 161/udp
 
-CMD snmpsimd.py --v3-engine-id=201e20fde8d064c6 --agent-udpv4-endpoint=0.0.0.0:161 --data-dir=/usr/local/snmpsim/data --cache-dir=/usr/local/snmpsim/cache --process-user=snmpsim --process-group=snmpsim $EXTRA_FLAGS
+CMD snmpsim-command-responder --v3-engine-id=201e20fde8d064c6 --agent-udpv4-endpoint=0.0.0.0:161 --data-dir=/usr/local/snmpsim/data --cache-dir=/usr/local/snmpsim/cache --process-user=snmpsim --process-group=snmpsim $EXTRA_FLAGS
