@@ -18,10 +18,12 @@ The filename/directory determines the SNMP community name.
 
 If you want to run snmpsimd with more flags then you can use `EXTRA_FLAGS`, like this:
 
-    docker run -v snmpsim_data:/usr/local/snmpsim/data \
-               -p 161:161/udp \
-               -e EXTRA_FLAGS="--v3-user=opendcim --v3-auth-key=authpass"
-               timlegge/docker-snmpsim-opendcim
+    docker run --rm --name docker-snmpsim-opendcim \
+        -v snmpsim_data:/usr/local/snmpsim/data \
+        -p 161:161/udp \
+        -e EXTRA_FLAGS="--v3-user=opendcim --v3-auth-key=authpass \
+        --v3-auth-proto=SHA --v3-priv-key=privpass --v3-priv-proto=AES" \
+        timlegge/docker-snmpsim-opendcim
 
 ## Using with OpenDCIM
 
@@ -40,7 +42,7 @@ OpenDCIM is compatible with SNMPv3 however it is not compatible with snmpsimd's 
 To run a SNMP v3 version for testing with snmpwalk you can do the following:
  
     docker run --rm --name docker-snmpsim-opendcim \
-               -v snmpsim_d/usr/local/snmpsim/data:z \
+               -v snmpsim_d:/usr/local/snmpsim/data:z \
                -v snmpsim_cache:/usr/local/snmpsim/cache:z \
                -p 161:161/udp -e EXTRA_FLAGS="--v3-user=opendcim \
                --v3-auth-key=authpass --v3-auth-proto=SHA \
