@@ -162,4 +162,4 @@ Note that the command for the snmpset needs to have the port number appended to 
    3. ATS Status OID -> .1.3.6.1.4.1.850.1.1.3.4.3.1.1.1.12.1 is set to an intial value of 3 that can be changed by performing an snmpset command:
 
     snmpset -v2c -c tripplite/pdumh20atnet [DOCKER HOST IP Address ] \
-        192.168.10.172 .1.3.6.1.4.1.850.1.1.3.4.3.1.1.1.12.1 i 3
+        .1.3.6.1.4.1.850.1.1.3.4.3.1.1.1.12.1 i 3
