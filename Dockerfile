@@ -16,9 +16,8 @@ RUN mkdir -p /usr/local/snmpsim/cache && \
     cd /home/snmpsim && \
     git clone https://github.com/etingof/snmpsim.git && \
     cd snmpsim && \
-    git checkout bd2ce1ac6944a312ca9b15819ea5a777ab75dae2 && \
+#    git checkout tags/v0.4.7 -b v0.4.7 && \
     python setup.py install
 
 EXPOSE 161/udp
-
-CMD snmpsimd.py --v3-engine-id=201e20fde8d064c6 --agent-udpv4-endpoint=0.0.0.0:161 --data-dir=/usr/local/snmpsim/data --cache-dir=/usr/local/snmpsim/cache --process-user=snmpsim --process-group=snmpsim $EXTRA_FLAGS
+CMD snmpsim-command-responder --v3-engine-id=201e20fde8d064c6 --agent-udpv4-endpoint=0.0.0.0:161 --data-dir=/usr/local/snmpsim/data --cache-dir=/usr/local/snmpsim/cache --process-user=snmpsim --process-group=snmpsim $EXTRA_FLAGS
